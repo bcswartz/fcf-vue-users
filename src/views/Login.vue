@@ -53,12 +53,6 @@
                     email: "",
                     password: ""
                 },
-                signupForm: {
-                    name: "",
-                    title: "",
-                    email: "",
-                    password: ""
-                },
                 showLoginForm: true,
                 performingRequest: false,
                 errors: []

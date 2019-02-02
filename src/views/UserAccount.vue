@@ -115,7 +115,8 @@
 
 <script>
     import FormErrors from "../components/FormErrors";
-    import { mapState } from 'vuex'
+    import { mapState } from 'vuex';
+    import { userCollection } from "../firebaseConfig";
     import ReauthenticateModal from "../components/ReauthenticateModal";
     export default {
         name: "UserAccount",
@@ -175,7 +176,14 @@
                 this.attemptedAction = "changeEmail";
                 this.emailChangeSuccessful = false;
                 this.currentUser.updateEmail( this.changeCredentialsForm.email ).then( result => {
-                    this.emailChangeSuccessful = true;
+                    // Need to update the email address in the user document
+                    userCollection.doc( this.currentUser.uid ).set({
+                        emailAddress: this.changeCredentialsForm.email
+                    }, { merge: true } ).then( result => {
+                        this.emailChangeSuccessful = true;
+                    }).catch( err => {
+                        this.emailErrors.push( err.message );
+                    });
                 }).catch( err => {
                     if( err.code == "auth/requires-recent-login" ) {
                         this.dev.addLog( "Email change attempt triggered reauthentication.");
@@ -184,7 +192,7 @@
                     } else {
                         this.emailErrors.push( err.message );
                     }
-                })
+                });
             },
             changePassword() {
                 this.attemptedAction = "changePassword";

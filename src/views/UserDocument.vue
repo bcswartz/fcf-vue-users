@@ -166,7 +166,9 @@
                     zipCode: this.userProfileForm.zipCode || "",
                     age: this.userProfileForm.age || "",
                     title: this.userProfileForm.title || ""
-                }, { merge: true } );
+                }, { merge: true } ).catch( err => {
+                    this.errors.push( err.message );
+                });
                 this.$router.push( "/users" );
             }
         },

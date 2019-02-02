@@ -39,16 +39,6 @@ const userCreateFirebaseApp = firebase.initializeApp( config, "userCreation" );
 const userCreationAuth = userCreateFirebaseApp.auth();
 const currentUser = auth.currentUser;
 
-/*
- According to https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase,
- these settings need to be set to deal with a date issue with Firebase at the time the article was
- written (supposedly 5/22/18 )
-*/
-const settings = {
-    timestampsInSnapshots: true
-};
-db.settings( settings );
-
 // Declare your Firebase collections.  In this case, we only have the User collection
 const userCollection = db.collection( "users" );
 
